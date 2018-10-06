@@ -222,9 +222,9 @@ function play(guild, song) {
 		.on('end', reason => {
 			if (reason === 'Palaukite wtf.') console.log('Daina pasibaigė.');
 			else console.log(reason);
-			serverQueue.songs.shift();
+		///	serverQueue.songs.shift();
 			
-                setTimeout(function() {
+               setTimeout(function() {
                   play(guild, serverQueue.songs[0]);
                 }, 900000);
             })
