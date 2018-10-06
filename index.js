@@ -100,9 +100,9 @@ client.on('message', async msg => { // eslint-disable-line
 					msg.channel.send(`
 __**Muzika parinkta:**__
 
-${videos.map(video2 => `**◾ ${++index} -** ${video2.title}`).join('\n')}
+${videos.map(video2 => `**▹ ${++index} -** ${video2.title}`).join('\n')}
 
-⛳ Įrašykite skaičių, kad pasirinktumėte vieną iš paieškos rezultatų.
+✨ Įrašykite skaičių, kad pasirinktumėte vieną iš paieškos rezultatų.
 					`);
 					// eslint-disable-next-line max-depth
 					try {
@@ -113,7 +113,7 @@ ${videos.map(video2 => `**◾ ${++index} -** ${video2.title}`).join('\n')}
 						});
 					} catch (err) {
 						console.error(err);
-						return msg.channel.send('Neužpildyta arba neteisinga reikšmė, atšaukiamas vaizdo įrašų pasirinkimas.');
+						return msg.channel.send('⛔ Neužpildyta arba neteisingas skaičius, atšaukiamas vaizdo įrašų pasirinkimas.');
 					}
 					const videoIndex = parseInt(response.first().content);
 					var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
