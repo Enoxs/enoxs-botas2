@@ -12,7 +12,7 @@
     "discord.js": "^11.3.2",
     "opusscript": "0.0.3",
     "simple-youtube-api": "^3.0.0",
-    "ytdl-core": "^0.16.0"
+    "ytdl-core": "^0.26.1"
   },
   "devDependencies": {
     "eslint": "^4.0.0",
