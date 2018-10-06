@@ -229,7 +229,7 @@ function play(guild, song) {
 	}
 	console.log(serverQueue.songs);
 
-	const dispatcher = serverQueue.connection.playStream(yt-dl(song.url))
+	const dispatcher = serverQueue.connection.playStream(ytdl-core(song.url))
 		.on('end', reason => {
 			if (reason === 'Palaukite wtf.') console.log('Daina pasibaigė.');
 			else console.log(reason);
