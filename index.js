@@ -20,13 +20,17 @@ client.on("message", async message => {
     message.channel.send("Veikia!");
   }
   if (cmd === `${prefix}komandos` || cmd === `${prefix}help`){
-    message.channel.send("
+    message.channel.send(`
 **Komandos:**
-```yaml
-- -komandos - informacija apie visas komandas
-- -groti - paleisti muziką
-- -
-		");
+**⬥ -Komandos** ➔ Informacija apie visas komandas
+**⬥ -Groti** ➔ Paleisti dainą iš youtube
+**⬥ -Daina** ➔ Pažiūrėti kokia daina dabar groja
+**⬥ -Pauze** ➔ Sustabdyti dabartinę dainą
+**⬥ -Stabdys** ➔ Perjungti dainą į kitą
+**⬥ -Paleisti** ➔ Paleisti dabartinę dainą
+**⬥ -Praleisti** ➔ Praleisti dabartinę dainą
+**⬥ -Sarasas** ➔ Pažiūrėti kokios dainos yra sąraše
+		`;
   }	
 	
 	
@@ -121,11 +125,11 @@ Pateikite vertę, kad pasirinktumėte vieną iš paieškos rezultatų nuo 1 iki 
 		if (!serverQueue) return msg.channel.send('Šiuo metu nieko nėra , todėl galiu praleisti.');
 		serverQueue.connection.dispatcher.end('Daina buvo praleista!');
 		return undefined;
-	} else if (command === 'stop' || command === 'sustabdyti') {
+	} else if (command === 'stop' || command === 'stabdys') {
 		if (!msg.member.voiceChannel) return msg.channel.send('Kvailas? Prisijunk prie muzikos kanalo!');
 		if (!serverQueue) return msg.channel.send('Niekas šiuo metu negroja.');
 		serverQueue.songs = [];
-		serverQueue.connection.dispatcher.end('Stop command has been used!');
+		serverQueue.connection.dispatcher.end('Stabdžiai buvo įjungti!');
 		return undefined;
 	} else if (command === 'volume' || command === 'garsumas') {
 		if (!msg.member.voiceChannel) return msg.channel.send('Kvailas? Prisijunk prie muzikos kanalo!');
