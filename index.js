@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 
 bot.on("ready", async () => {
-  console.log(`${bot.user.username} is online!`);
-  bot.user.setActivity(`Hey, Wassup!`);
+  console.log(`${bot.user.username} prisijungė!`);
+  bot.user.setActivity(`Labas pasiklydėli!`);
 });
 
 bot.on("message", async message => {
@@ -16,8 +16,8 @@ bot.on("message", async message => {
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
 
-  if (cmd === `${prefix}ping`){
-    message.channel.send("Pong!");
+  if (cmd === `${prefix}testas`){
+    message.channel.send("Veikia!");
   }
 });
 
