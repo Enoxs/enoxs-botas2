@@ -220,13 +220,13 @@ function play(guild, song) {
 
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
 		.on('end', reason => {
-			if (reason === 'Stream is not generating quickly enough.') console.log('Daina pasibaigė.');
+			if (reason === 'Palaukite wtf.') console.log('Daina pasibaigė.');
 			else console.log(reason);
 			serverQueue.songs.shift();
 			
                 setTimeout(function() {
                   play(guild, serverQueue.songs[0]);
-                }, 500);
+                }, 1);
             })
 	
 		.on('error', error => console.error(error));
