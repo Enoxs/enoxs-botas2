@@ -6,7 +6,7 @@ const client = new Client({ disableEveryone: true });
 
 client.on("ready", async () => {
   console.log(`${client.user.username} prisijungė!`);
-  client.user.setActivity(`Labas pasiklydėli!`);
+  client.user.setActivity(`Labas! Įrašyk -komandos`);
 });
 
 client.on("message", async message => {
@@ -99,8 +99,10 @@ client.on('message', async msg => { // eslint-disable-line
 					let index = 0;
 					msg.channel.send(`
 __**Muzika parinkta:**__
-${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}
-Pateikite vertę, kad pasirinktumėte vieną iš paieškos rezultatų nuo 1 iki 10.
+
+${videos.map(video2 => `**◾ ${++index} -** ${video2.title}`).join('\n')}
+
+⛳ Įrašykite skaičių, kad pasirinktumėte vieną iš paieškos rezultatų.
 					`);
 					// eslint-disable-next-line max-depth
 					try {
