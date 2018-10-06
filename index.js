@@ -76,13 +76,12 @@ client.on('message', async msg => { // eslint-disable-line
 		const voiceChannel = msg.member.voiceChannel;
 		if (!voiceChannel) return msg.channel.send('Atsiprašau , bet gal pirma prisijunk prie muzikos kanalo?');
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
-		if (!permissions.has('CONNECT')) {
-			return msg.channel.send('Neturiu leidimų, prašau duoti :(');
-		}
-		if (!permissions.has('SPEAK')) {
-			return msg.channel.send('Neturiu leidimų, prašau duoti :(');
-		}
-
+		
+		
+		
+		if (!permissions.has('CONNECT')) return msg.channel.send('Neturiu leidimų, prašau duoti :(');
+		if (!permissions.has('SPEAK')) return msg.channel.send('Neturiu leidimų, prašau duoti :(');
+		
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			const playlist = await youtube.getPlaylist(url);
 			const videos = await playlist.getVideos();
@@ -224,8 +223,12 @@ function play(guild, song) {
 			if (reason === 'Stream is not generating quickly enough.') console.log('Daina pasibaigė.');
 			else console.log(reason);
 			serverQueue.songs.shift();
-			play(guild, serverQueue.songs[0]);
-		})
+			
+                setTimeout(function() {
+                  play(guild, serverQueue.songs[0]);
+                }, 500);
+            })
+	
 		.on('error', error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
