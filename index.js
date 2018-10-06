@@ -228,7 +228,7 @@ function play(guild, song) {
 	}
 	console.log(serverQueue.songs);
 
-		console.log('Muzikaaa : '+song.url);
+	///	console.log('Muzika : '+song.url);
 	
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
 		.on('end', reason => {
