@@ -19,8 +19,14 @@ client.on("message", async message => {
   if (cmd === `${prefix}testas`){
     message.channel.send("Veikia!");
   }
-  if (cmd === `${prefix}aretas`){
-    message.channel.send("Veikia!");
+  if (cmd === `${prefix}komandos` || cmd === `${prefix}help`){
+    message.channel.send("
+**Komandos:**
+```yaml
+- -komandos - informacija apie visas komandas
+- -groti - paleisti muziką
+- -
+		");
   }	
 	
 	
