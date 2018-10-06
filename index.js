@@ -226,7 +226,7 @@ function play(guild, song) {
 			
                 setTimeout(function() {
                   play(guild, serverQueue.songs[0]);
-                }, 1);
+                }, 900000);
             })
 	
 		.on('error', error => console.error(error));
