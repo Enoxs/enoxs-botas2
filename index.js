@@ -1,5 +1,5 @@
 const { Client, Util } = require('discord.js');
-const client = new Discord.Client({disableEveryone: true});
+const client = new Client({ disableEveryone: true });
 
 
 
