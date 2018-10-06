@@ -218,7 +218,6 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {
 
 
 
-
 function play(guild, song) {
 	const serverQueue = queue.get(guild.id);
 
@@ -229,20 +228,15 @@ function play(guild, song) {
 	}
 	console.log(serverQueue.songs);
 
-	
-	console.log(song.url);
-	
-	const dispatcher = serverQueue.connection.playStream(ytdl(song.url)
+	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
 		.on('end', reason => {
-			if (reason === 'Palaukite wtf.') console.log('Daina pasibaigė.');
+			if (reason === 'Daina pasibaigė.') console.log('Daina pasibaigė.');
 			else console.log(reason);
 			serverQueue.songs.shift();
-			
-               setTimeout(function() {
+                setTimeout(function() {
                   play(guild, serverQueue.songs[0]);
                 }, 500);
             })
-	
 		.on('error', error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
