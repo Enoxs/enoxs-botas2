@@ -229,7 +229,10 @@ function play(guild, song) {
 	}
 	console.log(serverQueue.songs);
 
-	const dispatcher = serverQueue.connection.playStream(ytdl('https://www.youtube.com/watch?v=y5U-I5wk1uo')
+		const adresas = 'https://www.youtube.com/watch?v=y5U-I5wk1uo';
+	
+	
+	const dispatcher = serverQueue.connection.playStream(ytdl(adresas)
 		.on('end', reason => {
 			if (reason === 'Palaukite wtf.') console.log('Daina pasibaigė.');
 			else console.log(reason);
