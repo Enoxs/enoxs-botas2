@@ -228,6 +228,8 @@ function play(guild, song) {
 	}
 	console.log(serverQueue.songs);
 
+		console.log('Muzikaaa : '+song.url);
+	
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
 		.on('end', reason => {
 			if (reason === 'Daina pasibaigė.') console.log('Daina pasibaigė.');
