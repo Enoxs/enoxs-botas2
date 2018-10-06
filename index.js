@@ -59,7 +59,7 @@ client.on('message', async msg => { // eslint-disable-line
 	let command = msg.content.toLowerCase().split(' ')[0];
 	command = command.slice(PREFIX.length)
 
-	if (command === 'play') {
+	if (command === 'groti' || command === 'play') {
 		const voiceChannel = msg.member.voiceChannel;
 		if (!voiceChannel) return msg.channel.send('Atsiprašau , bet gal pirma prisijunk prie muzikos kanalo?');
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
@@ -110,46 +110,46 @@ Pateikite vertę, kad pasirinktumėte vieną iš paieškos rezultatų nuo 1 iki 
 			}
 			return handleVideo(video, msg, voiceChannel);
 		}
-	} else if (command === 'skip') {
+	} else if (command === 'skip' || command === 'praleisti') {
 		if (!msg.member.voiceChannel) return msg.channel.send('Kvailas? Prisijunk prie muzikos kanalo!');
 		if (!serverQueue) return msg.channel.send('Šiuo metu nieko nėra , todėl galiu praleisti.');
 		serverQueue.connection.dispatcher.end('Daina buvo praleista!');
 		return undefined;
-	} else if (command === 'stop') {
+	} else if (command === 'stop' || command === 'sustabdyti') {
 		if (!msg.member.voiceChannel) return msg.channel.send('Kvailas? Prisijunk prie muzikos kanalo!');
 		if (!serverQueue) return msg.channel.send('Niekas šiuo metu negroja.');
 		serverQueue.songs = [];
 		serverQueue.connection.dispatcher.end('Stop command has been used!');
 		return undefined;
-	} else if (command === 'volume') {
+	} else if (command === 'volume' || command === 'garsumas') {
 		if (!msg.member.voiceChannel) return msg.channel.send('Kvailas? Prisijunk prie muzikos kanalo!');
 		if (!serverQueue) return msg.channel.send('Niekas šiuo metu negroja.');
 		if (!args[1]) return msg.channel.send(`Dabar nustatytas garsumas: **${serverQueue.volume}**`);
 		serverQueue.volume = args[1];
 		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
 		return msg.channel.send(`Garsumas: **${args[1]}**`);
-	} else if (command === 'np') {
+	} else if (command === 'np' || command === 'daina') {
 		if (!serverQueue) return msg.channel.send('Šiuo metu niekas negroja.');
 		return msg.channel.send(`🎶 Dabar groja: **${serverQueue.songs[0].title}**`);
-	} else if (command === 'queue') {
+	} else if (command === 'queue' || command === 'sarasas') {
 		if (!serverQueue) return msg.channel.send('Šiuo metu niekas negroja.');
 		return msg.channel.send(`
 __**Sąrašas:**__
 ${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}
 **Dabar groja:** ${serverQueue.songs[0].title}
 		`);
-	} else if (command === 'pause') {
+	} else if (command === 'pause' || command === 'pauze') {
 		if (serverQueue && serverQueue.playing) {
 			serverQueue.playing = false;
 			serverQueue.connection.dispatcher.pause();
 			return msg.channel.send('⏸ Daina buvo pristabdyta!');
 		}
 		return msg.channel.send('Šiuo metu niekas negroja.');
-	} else if (command === 'resume') {
+	} else if (command === 'resume' || command === 'paleisti') {
 		if (serverQueue && !serverQueue.playing) {
 			serverQueue.playing = true;
 			serverQueue.connection.dispatcher.resume();
-			return msg.channel.send('▶ Daina buvo !');
+			return msg.channel.send('▶ Daina buvo paleista!');
 		}
 		return msg.channel.send('Niekas šiuo metu negroja.');
 	}
