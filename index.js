@@ -20,7 +20,7 @@ client.on("message", async message => {
     message.channel.send("Veikia!");
   }
   if (cmd === `${prefix}komandos` || cmd === `${prefix}help`){
-    message.channel.send("
+    message.channel.send(`
 **Komandos:**
 **⬥ -Komandos** ➔ Informacija apie visas komandas
 **⬥ -Groti** ➔ Paleisti dainą iš youtube
@@ -30,7 +30,7 @@ client.on("message", async message => {
 **⬥ -Paleisti** ➔ Paleisti dabartinę dainą
 **⬥ -Praleisti** ➔ Praleisti dabartinę dainą
 **⬥ -Sarasas** ➔ Pažiūrėti kokios dainos yra sąraše
-		");
+		`);
   }	
 	
 	
