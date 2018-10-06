@@ -19,7 +19,15 @@ client.on("message", async message => {
   if (cmd === `${prefix}testas`){
     message.channel.send("Veikia!");
   }
+  if (cmd === `${prefix}aretas`){
+    message.channel.send("Veikia!");
+  }	
+	
+	
 });
+
+
+
 
 const { TOKEN, PREFIX, GOOGLE_API_KEY } = require('./config');
 const YouTube = require('simple-youtube-api');
@@ -33,11 +41,11 @@ client.on('warn', console.warn);
 
 client.on('error', console.error);
 
-client.on('ready', () => console.log('Yo this ready!'));
+client.on('ready', () => console.log('Pasiruošęs dirbti!'));
 
-client.on('disconnect', () => console.log('I just disconnected, making sure you know, I will reconnect now...'));
+client.on('disconnect', () => console.log('Tuoj persikrausiu...'));
 
-client.on('reconnecting', () => console.log('I am reconnecting now!'));
+client.on('reconnecting', () => console.log('Persikraunu!'));
 
 client.on('message', async msg => { // eslint-disable-line
 	if (msg.author.bot) return undefined;
@@ -53,13 +61,13 @@ client.on('message', async msg => { // eslint-disable-line
 
 	if (command === 'play') {
 		const voiceChannel = msg.member.voiceChannel;
-		if (!voiceChannel) return msg.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
+		if (!voiceChannel) return msg.channel.send('Atsiprašau , bet gal pirma prisijunk prie muzikos kanalo?');
 		const permissions = voiceChannel.permissionsFor(msg.client.user);
 		if (!permissions.has('CONNECT')) {
-			return msg.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!');
+			return msg.channel.send('Neturiu leidimų, prašau duoti :(');
 		}
 		if (!permissions.has('SPEAK')) {
-			return msg.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
+			return msg.channel.send('Neturiu leidimų, prašau duoti :(');
 		}
 
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
@@ -69,7 +77,7 @@ client.on('message', async msg => { // eslint-disable-line
 				const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
 				await handleVideo(video2, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
 			}
-			return msg.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`);
+			return msg.channel.send(`✅ Sąrašas: **${playlist.title}** buvo pridėta!`);
 		} else {
 			try {
 				var video = await youtube.getVideo(url);
@@ -78,9 +86,9 @@ client.on('message', async msg => { // eslint-disable-line
 					var videos = await youtube.searchVideos(searchString, 10);
 					let index = 0;
 					msg.channel.send(`
-__**Song selection:**__
+__**Muzika parinkta:**__
 ${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}
-Please provide a value to select one of the search results ranging from 1-10.
+Pateikite vertę, kad pasirinktumėte vieną iš paieškos rezultatų nuo 1 iki 10.
 					`);
 					// eslint-disable-next-line max-depth
 					try {
@@ -91,59 +99,59 @@ Please provide a value to select one of the search results ranging from 1-10.
 						});
 					} catch (err) {
 						console.error(err);
-						return msg.channel.send('No or invalid value entered, cancelling video selection.');
+						return msg.channel.send('Neužpildyta arba neteisinga reikšmė, atšaukiamas vaizdo įrašų pasirinkimas.');
 					}
 					const videoIndex = parseInt(response.first().content);
 					var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
 				} catch (err) {
 					console.error(err);
-					return msg.channel.send('🆘 I could not obtain any search results.');
+					return msg.channel.send('🆘 Ot kurmis! Nieko neradau.');
 				}
 			}
 			return handleVideo(video, msg, voiceChannel);
 		}
 	} else if (command === 'skip') {
-		if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!');
-		if (!serverQueue) return msg.channel.send('There is nothing playing that I could skip for you.');
-		serverQueue.connection.dispatcher.end('Skip command has been used!');
+		if (!msg.member.voiceChannel) return msg.channel.send('Kvailas? Prisijunk prie muzikos kanalo!');
+		if (!serverQueue) return msg.channel.send('Šiuo metu nieko nėra , todėl galiu praleisti.');
+		serverQueue.connection.dispatcher.end('Daina buvo praleista!');
 		return undefined;
 	} else if (command === 'stop') {
-		if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!');
-		if (!serverQueue) return msg.channel.send('There is nothing playing that I could stop for you.');
+		if (!msg.member.voiceChannel) return msg.channel.send('Kvailas? Prisijunk prie muzikos kanalo!');
+		if (!serverQueue) return msg.channel.send('Niekas šiuo metu negroja.');
 		serverQueue.songs = [];
 		serverQueue.connection.dispatcher.end('Stop command has been used!');
 		return undefined;
 	} else if (command === 'volume') {
-		if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!');
-		if (!serverQueue) return msg.channel.send('There is nothing playing.');
-		if (!args[1]) return msg.channel.send(`The current volume is: **${serverQueue.volume}**`);
+		if (!msg.member.voiceChannel) return msg.channel.send('Kvailas? Prisijunk prie muzikos kanalo!');
+		if (!serverQueue) return msg.channel.send('Niekas šiuo metu negroja.');
+		if (!args[1]) return msg.channel.send(`Dabar nustatytas garsumas: **${serverQueue.volume}**`);
 		serverQueue.volume = args[1];
 		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
-		return msg.channel.send(`I set the volume to: **${args[1]}**`);
+		return msg.channel.send(`Garsumas: **${args[1]}**`);
 	} else if (command === 'np') {
-		if (!serverQueue) return msg.channel.send('There is nothing playing.');
-		return msg.channel.send(`🎶 Now playing: **${serverQueue.songs[0].title}**`);
+		if (!serverQueue) return msg.channel.send('Šiuo metu niekas negroja.');
+		return msg.channel.send(`🎶 Dabar groja: **${serverQueue.songs[0].title}**`);
 	} else if (command === 'queue') {
-		if (!serverQueue) return msg.channel.send('There is nothing playing.');
+		if (!serverQueue) return msg.channel.send('Šiuo metu niekas negroja.');
 		return msg.channel.send(`
-__**Song queue:**__
+__**Sąrašas:**__
 ${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}
-**Now playing:** ${serverQueue.songs[0].title}
+**Dabar groja:** ${serverQueue.songs[0].title}
 		`);
 	} else if (command === 'pause') {
 		if (serverQueue && serverQueue.playing) {
 			serverQueue.playing = false;
 			serverQueue.connection.dispatcher.pause();
-			return msg.channel.send('⏸ Paused the music for you!');
+			return msg.channel.send('⏸ Daina buvo pristabdyta!');
 		}
-		return msg.channel.send('There is nothing playing.');
+		return msg.channel.send('Šiuo metu niekas negroja.');
 	} else if (command === 'resume') {
 		if (serverQueue && !serverQueue.playing) {
 			serverQueue.playing = true;
 			serverQueue.connection.dispatcher.resume();
-			return msg.channel.send('▶ Resumed the music for you!');
+			return msg.channel.send('▶ Daina buvo !');
 		}
-		return msg.channel.send('There is nothing playing.');
+		return msg.channel.send('Niekas šiuo metu negroja.');
 	}
 
 	return undefined;
@@ -175,15 +183,15 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {
 			queueConstruct.connection = connection;
 			play(msg.guild, queueConstruct.songs[0]);
 		} catch (error) {
-			console.error(`I could not join the voice channel: ${error}`);
+			console.error(`Negaliu prisijungti prie: ${error}`);
 			queue.delete(msg.guild.id);
-			return msg.channel.send(`I could not join the voice channel: ${error}`);
+			return msg.channel.send(`Negaliu prisijungti prie: ${error}`);
 		}
 	} else {
 		serverQueue.songs.push(song);
 		console.log(serverQueue.songs);
 		if (playlist) return undefined;
-		else return msg.channel.send(`✅ **${song.title}** has been added to the queue!`);
+		else return msg.channel.send(`✅ **${song.title}** buvo pridėta į sąrašą!`);
 	}
 	return undefined;
 }
@@ -200,7 +208,7 @@ function play(guild, song) {
 
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
 		.on('end', reason => {
-			if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
+			if (reason === 'Stream is not generating quickly enough.') console.log('Daina pasibaigė.');
 			else console.log(reason);
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
@@ -208,7 +216,7 @@ function play(guild, song) {
 		.on('error', error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
-	serverQueue.textChannel.send(`🎶 Start playing: **${song.title}**`);
+	serverQueue.textChannel.send(`🎶 Groja: **${song.title}**`);
 }
 
 
