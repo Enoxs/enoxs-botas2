@@ -208,6 +208,17 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {
 	return undefined;
 }
 
+
+
+
+
+
+
+
+
+
+
+
 function play(guild, song) {
 	const serverQueue = queue.get(guild.id);
 
@@ -218,7 +229,7 @@ function play(guild, song) {
 	}
 	console.log(serverQueue.songs);
 
-	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+	const dispatcher = serverQueue.connection.playStream(youtube-dl(song.url))
 		.on('end', reason => {
 			if (reason === 'Palaukite wtf.') console.log('Daina pasibaigė.');
 			else console.log(reason);
