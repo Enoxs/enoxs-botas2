@@ -6,7 +6,7 @@ const client = new Client({ disableEveryone: true });
 
 client.on("ready", async () => {
   console.log(`${client.user.username} prisijungė!`);
-  client.user.setActivity(`Labas! Įrašyk -komandos`);
+  client.user.setActivity(`Labas! Groja muzika!`);
 });
 
 client.on("message", async message => {
@@ -25,8 +25,8 @@ client.on("message", async message => {
   if (cmd === `${prefix}komandos` || cmd === `${prefix}help`){
     message.channel.send(`
 **Komandos:**
-**⬥ -Komandos** ➔ Informacija apie visas komandas
-**⬥ -Groti** ➔ Paleisti dainą iš youtube
+**⬥ qaqKomandos** ➔ Informacija apie visas komandas
+**⬥ qaqGroti** ➔ Paleisti dainą iš youtube
 **⬥ -Daina** ➔ Pažiūrėti kokia daina dabar groja
 **⬥ -Pauze** ➔ Sustabdyti dabartinę dainą
 **⬥ -Stabdys** ➔ Perjungti dainą į kitą
